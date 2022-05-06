@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titel</title>
+  </head>
+  <body>
+<form name="mturk_form" method="post" id="mturk_form" action="http://localhost:8000/">
+
+<!-- start mturk_template -->
+
+<!-- For help on using this template, see the blog post: https://blog.mturk.com/editing-the-survey-link-project-template-in-the-ui-7c75285105fb#.py7towsdx -->
+<!-- HIT template: SurveyLink-v3.0 -->
+<!-- The following snippet enables the 'responsive' behavior on smaller screens -->
+<meta content="width=device-width,initial-scale=1" name="viewport" />
+
+
+
+<div class="container-fluid">
+
+    <div class="row hitTask" style="height: 100vh;">
+        <div class="col-md-12">
+            <div class="card" style="height: 100vh;">
+                <div class="card-header">Survey instructions - Do two wiki pages describe the same thing?</div>
+                <div class="card-body d-flex flex-column" style="height: 85vh;">
+                        <div>
+                            Hello, <br/>
+                            this survey is about deciding if two wiki pages describe the same concept/thing in the real world.<br/>
+                            For example a wikipage about <i>USA</i> describe the same concept as a wikipage about <i>United States</i> or <i>America</i>.
+                            To decrease the time you need for this survey, you can also use the keyboard with keys "n" (no match) and "m" (match).
+                            After each decision, the page will automatically scroll to the next entry.
+                            Please use a recent version of Chrome, Firefox, Internet Explorer or Opera and have javascript enabled.
+                            You have a maximum of 30 minutes for this survey, i.e. half a minute for each decision.
+                            Following a small example: The left and middle wiki page should be a match whereas the left and the right should not be matched.
+                        </div>
+                        
+                        <div class="row" style="height: 60vh;">
+                            <div class="col-4 d-flex justify-content-center" style="height:100%">
+                                <div style="overflow-y:auto;border: 3px solid;">
+                                    <img style="max-width:100%;" src="http://data.dws.informatik.uni-mannheim.de/dbkwik/mturk_images_example/United_States_of_America.jpeg" />
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-center" style="height:100%">
+                                <div style="overflow-y:auto;border: 3px solid;">
+                                    <img style="max-width:100%;" src="http://data.dws.informatik.uni-mannheim.de/dbkwik/mturk_images_example/USA.jpeg" />
+                                </div>
+                            </div>
+                            <div class="col-4 d-flex justify-content-center" style="height:100%">
+                                <div style="overflow-y:auto;border: 3px solid;">
+                                    <img style="max-width:100%;" src="http://data.dws.informatik.uni-mannheim.de/dbkwik/mturk_images_example/USA_USA.jpeg" />
+                                </div>
+                            </div>
+                        </div>
+                    <!--https://countries.fandom.com/wiki/United_States_of_America
+                    https://thedayaftertomorrow.fandom.com/wiki/USA
+                    https://regularshow.fandom.com/wiki/USA!_USA!-->
+                </div>
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary startBtn">Start</button>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
+    #foreach($i in [1..$matches_per_hit])
+    <div class="row hitTask" style="height: 100vh;">
+        <!-- match $d{left_resource_$i} with $d{right_resource_$i} -->
+        <div class="col-12" style="height: 100%;">
+            <div style="height:3%;background-color:#343a40">
+                <span style="color:rgba(255,255,255,.5);font-size: 2vh;">$i/$matches_per_hit</span>
+            </div>
+            <div class="row" style="height:7%" >
+                <div class="col-6 d-flex justify-content-center align-self-center">
+                    <a style="word-break: break-word" href="$d{left_url_$i}" target="_blank">$d{left_url_$i}</a>
+                </div>
+                <div class="col-6 d-flex justify-content-center align-self-center">
+                    <a style="word-break: break-word" href="$d{right_url_$i}" target="_blank">$d{right_url_$i}</a>
+                </div>
+            </div>
+            <div class="row" style="height:80%">
+                <div class="col-6 d-flex justify-content-center" style="height:100%">
+                    <div style="overflow-y:auto;border: 3px solid; width:100%">
+                        <iframe style="width:99%;height:99%" src="$d{left_url_$i}"></iframe>
+                    </div>
+                </div>
+                <div class="col-6 d-flex justify-content-center" style="height:100%">
+                    <div style="overflow-y:auto;border: 3px solid; width:100%">
+                        <iframe style="width:99%;height:99%" src="$d{right_url_$i}"></iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="height:10%;">
+                <div class="col-lg-3 col-1"></div>
+                <div class="col-lg-6 col-10 align-self-center">
+                    <div class="btn-group btn-group-toggle d-flex" data-toggle="buttons">
+                        <label class="btn btn-outline-danger btn-lg w-100"><input class="userBtn noMatch" type="radio" value="no" name="result_$i" required="required">No Match (n)</label>
+                        <label class="btn btn-outline-success btn-lg w-100"><input class="userBtn match" type="radio" value="yes" name="result_$i" required="required">Match (m)</label>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-1"></div>
+            </div>
+        </div>
+    </div>
+    #end
+
+</div>
+
+
+<!-- Please note that Bootstrap CSS/JS and JQuery are 3rd party libraries that may update their url/code at any time. Amazon Mechanical Turk (MTurk) is including these libraries as a default option for you, but is not responsible for any changes to the external libraries --><!-- External CSS references -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!-- Open internal style sheet -->
+<style type="text/css">
+#submitButton{
+  white-space: normal;
+}
+</style>
+<!-- Close internal style sheet -->
+<!-- External JS references -->
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+
+<!-- Open internal javascript -->
+<script>
+    function scrollToHitTask(hitTask){
+        if(hitTask){
+            if(hitTask.length != 0){
+                $('html, body').animate({scrollTop: hitTask.offset().top });
+                return;
+            }
+        }
+        $('html, body').animate({scrollTop: $(document).height() });
+    }
+    
+    function activateBtn(hitTask, btnClass){
+        if(hitTask){
+            var myBtn = hitTask.find(btnClass).click();
+        }
+    }
+    
+    function getHitTaskInView(){
+        var bottom_of_screen = $(window).scrollTop() + $(window).innerHeight();
+        var top_of_screen = $(window).scrollTop();
+        console.log('bottom: ' + bottom_of_screen + ' top: ' + top_of_screen)
+        var el = null;
+        $('.hitTask').each(function(index) {
+            var frame = $(this).first();//.find('iframe');
+            var top_of_element = frame.offset().top;
+            var height_of_element = frame.outerHeight();
+            var bottom_of_element = frame.offset().top + height_of_element;
+
+            if(bottom_of_element < top_of_screen || top_of_element > bottom_of_screen){
+                console.log('    element ' + index + ': bottom: ' + bottom_of_element + ' top: ' + top_of_element + ' -> not visible at all');
+            }else if(bottom_of_element <= bottom_of_screen && top_of_element >= top_of_screen){
+                console.log('    element ' + index + ': bottom: ' + bottom_of_element + ' top: ' + top_of_element + ' -> fully visible');
+                el = $(this);
+                return false;
+            }else if(top_of_element <= top_of_screen){
+                console.log('    element ' + index + ': bottom: ' + bottom_of_element + ' top: ' + top_of_element + ' ->partially visible up: ');
+                console.log((bottom_of_element - top_of_screen)/height_of_element);
+                if((bottom_of_element - top_of_screen)/height_of_element >= 0.5){
+                    el = $(this);
+                    return false;
+                }
+            }else if(bottom_of_element >= bottom_of_screen){
+                console.log('    element ' + index + ': bottom: ' + bottom_of_element + ' top: ' + top_of_element + ' ->partially visible down: ');
+                console.log((bottom_of_screen - top_of_element)/height_of_element);
+                if((bottom_of_screen - top_of_element)/height_of_element >= 0.5){
+                    el = $(this);
+                    return false;
+                }
+            }
+        });
+        //console.log(el);
+        //el.find('.noMatch').prop("checked", true);
+        return el;
+    }
+        
+    $(document).ready(function() {
+        $('.userBtn').change(function() {
+            var scrollToElement = $(this).closest('.hitTask').next('.hitTask');
+            scrollToHitTask(scrollToElement);
+        });
+        $('.startBtn').click(function() {
+            var scrollToElement = $(this).closest('.hitTask').next('.hitTask');
+            scrollToHitTask(scrollToElement);
+        });
+        
+        $(document).keyup(function(e) {
+                switch (e.keyCode)
+                {
+                    case 78://n = no match
+                        {
+                            var hitTask = getHitTaskInView();
+                            activateBtn(hitTask, '.noMatch');
+                            scrollToHitTask(hitTask.next('.hitTask'));
+                            break;
+                        };
+                    case 77://m = match
+                        {
+                            var hitTask = getHitTaskInView();
+                            activateBtn(hitTask, '.match');
+                            scrollToHitTask(hitTask.next('.hitTask'));
+                            break;
+                        };
+                }
+            });
+    });
+</script><!-- Close internal javascript -->
+
+
+
+
+<!-- end mturk_template -->
+
+<input type="submit" id="submitButton" class="btn btn-primary" value="Submit">
+</form>
+  </body>
+</html>
